@@ -16,6 +16,9 @@ namespace WebGentle.BookStore
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+           
+            services.AddControllersWithViews();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -26,15 +29,38 @@ namespace WebGentle.BookStore
                 app.UseDeveloperExceptionPage();
             }
 
+            //app.Use(async (Context, next) =>
+            //{
+            //    await Context.Response.WriteAsync("Hello from first Middleware");
+            //    await next();
+            //    await Context.Response.WriteAsync("Hello from firstandFirst Middleware");
+            //}
+            //);
+
+            //app.Use(async (Context, next) =>
+            //{
+            //    await Context.Response.WriteAsync("Hello From Second Middleware");
+
+            //});
+
+
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapGet("/", async context =>
                 {
-                    await context.Response.WriteAsync("Hello World!");
+                    await context.Response.WriteAsync(env.EnvironmentName);
                 });
             });
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapDefaultControllerRoute();
+            });
+           
+
+
         }
     }
 }
